@@ -1,0 +1,28 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<>();
+        if(digits.isEmpty()) return ans;
+
+        String[] keypad = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+      
+        ans.add("");
+
+       
+        for(int i = 0; i < digits.length(); i++) {
+            int digit = digits.charAt(i) - '0';
+            String letters = keypad[digit];
+
+            List<String> newAns = new ArrayList<>();
+
+          
+            for(String word : ans) {
+                for(char c : letters.toCharArray()) {
+                    newAns.add(word + c);
+                }
+            }
+            ans = newAns;
+        }
+        return ans;
+    }
+}
