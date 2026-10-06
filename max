@@ -1,0 +1,40 @@
+
+class Solution {
+    public int maxDiff(int num) {
+        String s = String.valueOf(num);
+        
+       
+        String maxStr = s;
+        for(char c : s.toCharArray()){
+            if(c != '9'){
+                maxStr = s.replace(c, '9');
+                break;
+            }
+        }
+        
+       
+        String minStr = s;
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(i==0){
+               
+                if(c != '1'){
+                    minStr = s.replace(c, '1');
+                    break;
+                }
+            } else {
+                
+                if(c != '0' && c != s.charAt(0)){
+                    minStr = s.replace(c, '0');
+                    break;
+                }
+            }
+        }
+        
+        int max = Integer.parseInt(maxStr);
+        int min = Integer.parseInt(minStr);
+        
+        return max - min;
+    }
+}
+\
