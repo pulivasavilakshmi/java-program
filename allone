@@ -1,0 +1,49 @@
+import java.util.*;
+
+class AllOne {
+    Map<String, Integer> keyCount = new HashMap<>();
+    TreeMap<Integer, Set<String>> countKeys = new TreeMap<>();
+
+    public void inc(String key) {
+        int old = keyCount.getOrDefault(key, 0);
+        int nw = old + 1;
+        keyCount.put(key, nw);
+
+        if (old > 0) {
+            countKeys.get(old).remove(key);
+            if (countKeys.get(old).isEmpty())
+                countKeys.remove(old);
+        }
+        countKeys.putIfAbsent(nw, new HashSet<>());
+        countKeys.get(nw).add(key);
+    }
+
+    public void dec(String key) {
+        if (!keyCount.containsKey(key)) return;
+
+        int old = keyCount.get(key);
+        int nw = old - 1;
+
+        countKeys.get(old).remove(key);
+        if (countKeys.get(old).isEmpty())
+            countKeys.remove(old);
+
+        if (nw == 0) {
+            keyCount.remove(key);
+        } else {
+            keyCount.put(key, nw);
+            countKeys.putIfAbsent(nw, new HashSet<>());
+            countKeys.get(nw).add(key);
+        }
+    }
+
+    public String getMaxKey() {
+        if (countKeys.isEmpty()) return "";
+        return countKeys.lastEntry().getValue().iterator().next();
+    }
+
+    public String getMinKey() {
+        if (countKeys.isEmpty()) return "";
+        return countKeys.firstEntry().getValue().iterator().next();
+    }
+}
