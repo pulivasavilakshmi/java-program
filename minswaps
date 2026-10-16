@@ -1,0 +1,36 @@
+class Solution {
+    public int minSwapsCouples(int[] row) {
+        int n = row.length;
+        int[] pos = new int[n];
+
+        
+        for (int i = 0; i < n; i++) {
+            pos[row[i]] = i;
+        }
+
+        int swaps = 0;
+
+        for (int i = 0; i < n; i += 2) {
+            int first = row[i];
+            int partner = first ^ 1; 
+            if (row[i + 1] == partner) {
+                continue; 
+            }
+
+       
+            int partnerIdx = pos[partner];
+            int personAtNext = row[i + 1];
+
+           
+            row[i + 1] = partner;
+            row[partnerIdx] = personAtNext;
+
+            
+            pos[partner] = i + 1;
+            pos[personAtNext] = partnerIdx;
+
+            swaps++;
+        }
+        return swaps;
+    }
+}
