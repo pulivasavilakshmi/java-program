@@ -1,0 +1,29 @@
+class Solution {
+    
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        dfs(root, 0, 0);
+        
+        List<List<Integer>> res = new ArrayList<>();
+        for (TreeMap<Integer, PriorityQueue<Integer>> rows : map.values()) {
+            List<Integer> col = new ArrayList<>();
+            for (PriorityQueue<Integer> pq : rows.values()) {
+                while (!pq.isEmpty()) {
+                    col.add(pq.poll());
+                }
+            }
+            res.add(col);
+        }
+        return res;
+    }
+    
+    private void dfs(TreeNode node, int col, int row) {
+        if (node == null) return;
+        
+        map.putIfAbsent(col, new TreeMap<>());
+        map.get(col).putIfAbsent(row, new PriorityQueue<>());
+        map.get(col).get(row).offer(node.val);
+        
+        dfs(node.left, col - 1, row + 1);
+        dfs(node.right, col + 1, row + 1);
+    }
+}
