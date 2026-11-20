@@ -1,0 +1,20 @@
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        ArrayList<Integer> a = new ArrayList<>();
+        while (s.hasNextInt()) a.add(s.nextInt());
+        int start = a.size() > 1 && a.get(0) == a.size() - 1 ? 1 : 0;
+        int count = 0;
+        for (int i = start; i < a.size(); i++) {
+            int x = a.get(i), p = 0, q = 1;
+            while (q < x) {
+                int t = p + q;
+                p = q;
+                q = t;
+            }
+            if (q == x || x == 0) count++;
+        }
+        System.out.println(count >= 2 ? count : -1);
+    }
+}
